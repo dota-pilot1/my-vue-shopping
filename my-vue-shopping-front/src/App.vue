@@ -1,6 +1,6 @@
 <script setup>
-import Header from '@/shared/components/Header.vue'
-import Footer from '@/shared/components/Footer.vue'
+import Header from './widgets/Header.vue'
+import Footer from './widgets/Footer.vue'
 </script>
 
 <template>
