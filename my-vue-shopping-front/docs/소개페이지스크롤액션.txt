@@ -1,0 +1,156 @@
+================================================================
+소개 페이지 스크롤 애니메이션 구현 정리
+================================================================
+
+1. 현재 구현 내용
+================================================================
+
+[파일 구조]
+src/
+  composables/
+    - useIntersectionObserver.ts   // 요소 화면 진입 감지
+    - useScrollParallax.ts          // 패럴랙스 효과
+    - useCountUp.ts                 // 숫자 카운팅
+  pages/About/components/
+    - HeroSection.vue               // 그라데이션 배경 + 타이핑
+    - FeaturesSection.vue           // 카드 순차 등장
+    - TechStackSection.vue          // 기술 스택 + 호버
+    - StatsSection.vue              // 숫자 카운터
+
+[핵심 효과]
+  - 스크롤 시 요소 순차 등장 (Fade + Slide)
+  - 그라데이션 배경 애니메이션
+  - 타이핑 효과
+  - 숫자 카운팅
+  - 카드 호버 효과
+
+
+2. 핵심 개념 3가지
+================================================================
+
+[1] Intersection Observer
+  - 요소가 화면에 보이는지 감지
+  - 스크롤 이벤트보다 성능 좋음
+  - 코드:
+      const observer = new IntersectionObserver(callback, {
+        threshold: 0.1  // 10% 보이면 트리거
+      });
+
+[2] Easing Functions
+  - 애니메이션 속도 곡선
+  - 예: easeOutCubic = 1 - (1-t)³
+  - 자연스러운 움직임 구현
+
+[3] CSS Transform + GPU 가속
+  - transform: translateY() ← 빠름 ✅
+  - top: 10px              ← 느림 ❌
+  - GPU를 활용한 부드러운 애니메이션
+
+
+3. 단계별 학습 로드맵
+================================================================
+
+[Level 1 - 기초] ✅ 현재 완료
+  - Intersection Observer
+  - CSS Transitions
+  - requestAnimationFrame
+  - 기본 Easing
+
+[Level 2 - 중급] ← 다음 목표
+  - SVG 애니메이션 (path drawing)
+  - 3D Transform (perspective, rotateY)
+  - Scroll Progress Bar
+  - Parallax 다층 효과
+
+[Level 3 - 고급]
+  - GSAP (ScrollTrigger)
+  - Canvas / WebGL
+  - Lottie (After Effects)
+  - Physics 기반 애니메이션
+
+[Level 4 - 전문가]
+  - 성능 최적화 (virtual scroll)
+  - 커스텀 Physics Engine
+  - Motion Design 원칙
+
+
+4. Framer Motion 필요한가?
+================================================================
+
+[결론] 당장은 NO ❌
+
+[비교표]
+항목          | 순수 구현    | Framer Motion
+-------------|-------------|---------------
+번들 크기     | 0kb         | 30kb
+개발 속도     | 느림        | 빠름
+커스터마이징  | 완전 자유   | 제한적
+학습 가치     | 높음        | 낮음
+현재 프로젝트 | 충분함      | 과함
+
+[도입 시점]
+  - 복잡한 Drag & Drop 필요할 때
+  - Layout 자동 애니메이션 필요할 때
+  - 프로토타이핑으로 빠른 실험할 때
+
+[현재는]
+  1. 순수 구현으로 기초 다지기
+  2. 성능 최적화 연습
+  3. 나중에 필요하면 점진적 도입
+
+
+5. 다음 실습 과제
+================================================================
+
+[초급]
+  □ 스크롤 진행 바 추가
+  □ 마우스 따라다니는 패럴랙스
+  □ 카드 3D tilt 효과
+
+[중급]
+  □ SVG path drawing
+  □ 커스텀 cursor
+  □ Magnetic button (마우스 끌림)
+
+[고급]
+  □ Three.js 3D 배경
+  □ Particle system
+  □ GSAP ScrollTrigger
+
+
+6. 추천 학습 자료
+================================================================
+
+[필수]
+  - easings.net           // 이징 함수 시각화
+  - cubic-bezier.com      // 베지어 곡선 편집기
+  - MDN Web Animations    // 공식 문서
+
+[심화]
+  - GSAP 공식 문서
+  - Material Motion 가이드
+  - Disney 12 Principles
+
+
+7. 핵심 요약
+================================================================
+
+✅ 현재 수준
+  - 중급 수준 스크롤 애니메이션 완성
+  - 순수 JavaScript + CSS로 구현
+  - 외부 라이브러리 없음
+
+🎯 다음 단계
+  1. 성능 측정 (Chrome DevTools)
+  2. 접근성 개선 (prefers-reduced-motion)
+  3. SVG, 3D Transform 실습
+
+❌ Framer Motion
+  - 당장 필요 없음
+  - 순수 구현으로 기초 먼저
+  - 필요하면 나중에 도입
+
+
+================================================================
+작성일: 2025-10-22
+================================================================

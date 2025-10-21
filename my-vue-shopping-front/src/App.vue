@@ -13,11 +13,19 @@ import Footer from './widgets/Footer.vue'
   </div>
 </template>
 
-<style scoped>
+<style>
 #app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #ffffff;
+  color: #2c3e50;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark #app {
+  background-color: #0f0f0f;
+  color: #e5e5e5;
 }
 
 .main-content {

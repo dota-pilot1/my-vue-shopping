@@ -15,14 +15,23 @@
         <router-link to="/about" class="nav-link">소개</router-link>
       </nav>
 
-      <!-- 오른쪽: 인증 버튼 -->
-      <AuthButtons />
+      <!-- 오른쪽: 다크모드 토글 + 인증 버튼 -->
+      <div class="right-section">
+        <button @click="toggleDark" class="theme-toggle" :aria-label="isDark ? '라이트 모드로 전환' : '다크 모드로 전환'">
+          <span v-if="isDark">☀️</span>
+          <span v-else>🌙</span>
+        </button>
+        <AuthButtons />
+      </div>
     </div>
   </header>
 </template>
 
 <script setup>
+import { useDarkMode } from '@/composables/useDarkMode';
 import AuthButtons from './AuthButtons.vue';
+
+const { isDark, toggleDark } = useDarkMode();
 </script>
 
 <style scoped>
@@ -33,6 +42,12 @@ import AuthButtons from './AuthButtons.vue';
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background-color 0.3s;
+}
+
+:global(.dark) .header {
+  background-color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .header-container {
@@ -92,6 +107,35 @@ import AuthButtons from './AuthButtons.vue';
 
 .nav-link.router-link-active {
   background-color: #42b883;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(20deg);
+}
+
+.theme-toggle:active {
+  transform: scale(0.9);
 }
 
 @media (max-width: 768px) {

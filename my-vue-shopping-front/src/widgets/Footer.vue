@@ -12,6 +12,11 @@
   color: #a0aec0;
   padding: 2rem;
   margin-top: auto;
+  transition: background-color 0.3s;
+}
+
+:global(.dark) .footer {
+  background-color: #1a1a1a;
 }
 
 .footer-container {

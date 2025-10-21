@@ -20,5 +20,10 @@
   color: #718096;
   font-size: 1.3rem;
   font-weight: 500;
+  transition: color 0.3s;
+}
+
+:global(.dark) .coming-soon {
+  color: #a0aec0;
 }
 </style>
