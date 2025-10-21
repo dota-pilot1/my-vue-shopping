@@ -13,17 +13,17 @@
       <nav class="nav">
         <router-link to="/" class="nav-link">홈</router-link>
         <router-link to="/about" class="nav-link">소개</router-link>
-        <router-link to="/test-form" class="nav-link">테스트 폼</router-link>
       </nav>
 
-      <!-- 오른쪽: 사용자 정보 -->
-      <div class="user-info">
-        <span class="user-name">John Doe</span>
-        <span class="user-icon">👤</span>
-      </div>
+      <!-- 오른쪽: 인증 버튼 -->
+      <AuthButtons />
     </div>
   </header>
 </template>
+
+<script setup>
+import AuthButtons from './AuthButtons.vue';
+</script>
 
 <style scoped>
 .header {
@@ -94,28 +94,6 @@
   background-color: #42b883;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-shrink: 0;
-}
-
-.user-name {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.user-icon {
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.user-icon:hover {
-  transform: scale(1.1);
-}
-
 @media (max-width: 768px) {
   .header-container {
     padding: 1rem;
@@ -127,10 +105,6 @@
 
   .nav {
     gap: 1rem;
-  }
-
-  .user-name {
-    display: none;
   }
 }
 </style>
