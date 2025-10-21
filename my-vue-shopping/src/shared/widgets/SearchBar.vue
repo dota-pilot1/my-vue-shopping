@@ -14,8 +14,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import Button from '../ui/Button.vue'
-import Input from '../ui/Input.vue'
+import Button from '@/shared/ui/Button.vue'
+import Input from '@/shared/ui/Input.vue'
 
 const searchQuery = ref('')
 

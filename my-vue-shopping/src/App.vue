@@ -1,5 +1,6 @@
 <script setup>
-import Header from './shared/components/Header.vue'
+import Header from '@/shared/components/Header.vue'
+import Footer from '@/shared/components/Footer.vue'
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import Header from './shared/components/Header.vue'
     <main class="main-content">
       <router-view />
     </main>
+    <Footer />
   </div>
 </template>
 
@@ -24,5 +26,6 @@ import Header from './shared/components/Header.vue'
   margin: 0 auto;
   width: 100%;
   padding: 2rem 1rem;
+  box-sizing: border-box;
 }
 </style>

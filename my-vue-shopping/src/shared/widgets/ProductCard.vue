@@ -26,8 +26,8 @@
 </template>
 
 <script setup>
-import Card from '../ui/Card.vue'
-import Button from '../ui/Button.vue'
+import Card from '@/shared/ui/Card.vue'
+import Button from '@/shared/ui/Button.vue'
 
 defineProps({
   name: {
