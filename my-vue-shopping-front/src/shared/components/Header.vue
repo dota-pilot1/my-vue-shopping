@@ -13,6 +13,7 @@
       <nav class="nav">
         <router-link to="/" class="nav-link">홈</router-link>
         <router-link to="/about" class="nav-link">소개</router-link>
+        <router-link to="/test-form" class="nav-link">테스트 폼</router-link>
       </nav>
 
       <!-- 오른쪽: 사용자 정보 -->
