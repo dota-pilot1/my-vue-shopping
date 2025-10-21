@@ -2,7 +2,7 @@
   <div class="auth-buttons">
     <!-- 로그인한 경우 -->
     <div v-if="userStore.isLoggedIn" class="user-info">
-      <span class="user-name">{{ userStore.user.name }}님</span>
+      <span class="user-name">{{ userStore.user?.name }}님</span>
       <button @click="handleLogout" class="logout-btn">로그아웃</button>
     </div>
 
@@ -15,17 +15,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useUserStore } from '@/shared/stores/useUserStore';
-import { useRouter } from 'vue-router';
+import { useLogout } from '@/features/auth';
 
 const userStore = useUserStore();
-const router = useRouter();
-
-const handleLogout = () => {
-  userStore.logout();
-  router.push('/');
-};
+const { handleLogout } = useLogout();
 </script>
 
 <style scoped>

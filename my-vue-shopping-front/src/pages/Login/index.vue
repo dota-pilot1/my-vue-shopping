@@ -21,8 +21,8 @@
           :error="errors.password"
         />
 
-        <Button type="submit" :disabled="isLoading">
-          {{ isLoading ? '로그인 중...' : '로그인' }}
+        <Button type="submit" :disabled="loginLoading">
+          {{ loginLoading ? '로그인 중...' : '로그인' }}
         </Button>
       </form>
 
@@ -39,22 +39,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '@/shared/stores/useUserStore';
+import { useLogin } from '@/features/auth';
 import Input from '@/shared/ui/Input.vue';
 import Button from '@/shared/ui/Button.vue';
 
-const router = useRouter();
-const userStore = useUserStore();
+const { handleLogin, isLoading: loginLoading, error: loginError } = useLogin();
 
 const email = ref('');
 const password = ref('');
-const errors = ref({});
-const isLoading = ref(false);
+const errors = ref<Record<string, string>>({});
 const message = ref('');
-const messageType = ref(''); // 'success' or 'error'
+const messageType = ref<'success' | 'error' | ''>('');
 
 const validateForm = () => {
   errors.value = {};
@@ -77,45 +74,19 @@ const validateForm = () => {
 const onSubmit = async () => {
   if (!validateForm()) return;
   
-  isLoading.value = true;
   message.value = '';
   
-  try {
-    // TODO: 실제 API 호출로 교체
-    // const response = await fetch('http://localhost:3000/auth/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ email: email.value, password: password.value })
-    // });
-    // const data = await response.json();
-    
-    // 임시: 로그인 시뮬레이션 (나중에 실제 API로 교체)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // 성공 시뮬레이션
-    const mockUser = {
-      id: 1,
-      name: email.value.split('@')[0],
-      email: email.value
-    };
-    const mockToken = 'mock-jwt-token-' + Date.now();
-    
-    userStore.setUser(mockUser);
-    userStore.setToken(mockToken);
-    
+  const result = await handleLogin({
+    email: email.value,
+    password: password.value,
+  });
+  
+  if (result.success) {
     message.value = '로그인 성공!';
     messageType.value = 'success';
-    
-    // 홈으로 리다이렉트
-    setTimeout(() => {
-      router.push('/');
-    }, 1000);
-    
-  } catch (error) {
-    message.value = '로그인 실패: ' + error.message;
+  } else {
+    message.value = result.error;
     messageType.value = 'error';
-  } finally {
-    isLoading.value = false;
   }
 };
 </script>

@@ -28,8 +28,8 @@
           :error="errors.password"
         />
 
-        <Button type="submit" :disabled="isLoading">
-          {{ isLoading ? '가입 중...' : '회원가입' }}
+        <Button type="submit" :disabled="registerLoading">
+          {{ registerLoading ? '가입 중...' : '회원가입' }}
         </Button>
       </form>
 
@@ -46,21 +46,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRegister } from '@/features/auth';
 import Input from '@/shared/ui/Input.vue';
 import Button from '@/shared/ui/Button.vue';
 
-const router = useRouter();
+const { handleRegister, isLoading: registerLoading, error: registerError } = useRegister();
 
 const email = ref('');
 const name = ref('');
 const password = ref('');
-const errors = ref({});
-const isLoading = ref(false);
+const errors = ref<Record<string, string>>({});
 const message = ref('');
-const messageType = ref(''); // 'success' or 'error'
+const messageType = ref<'success' | 'error' | ''>('');
 
 const validateForm = () => {
   errors.value = {};
@@ -89,30 +88,20 @@ const validateForm = () => {
 const onSubmit = async () => {
   if (!validateForm()) return;
   
-  isLoading.value = true;
   message.value = '';
   
-  try {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    console.log('회원가입 데이터:', {
-      email: email.value,
-      name: name.value,
-      password: password.value,
-    });
-    
+  const result = await handleRegister({
+    email: email.value,
+    name: name.value,
+    password: password.value,
+  });
+  
+  if (result.success) {
     message.value = '회원가입 성공! 로그인 페이지로 이동합니다.';
     messageType.value = 'success';
-    
-    setTimeout(() => {
-      router.push('/login');
-    }, 1500);
-    
-  } catch (error) {
-    message.value = '회원가입 실패: ' + error.message;
+  } else {
+    message.value = result.error;
     messageType.value = 'error';
-  } finally {
-    isLoading.value = false;
   }
 };
 </script>

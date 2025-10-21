@@ -1,23 +1,20 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import type { User } from '@/features/auth/types';
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref(null);
-  const token = ref(localStorage.getItem('token') || null);
+  const user = ref<User | null>(null);
+  const token = ref<string | null>(localStorage.getItem('token') || null);
 
   const isLoggedIn = computed(() => !!user.value);
 
-  function setUser(userData) {
+  function setUser(userData: User) {
     user.value = userData;
   }
 
-  function setToken(tokenValue) {
+  function setToken(tokenValue: string) {
     token.value = tokenValue;
-    if (tokenValue) {
-      localStorage.setItem('token', tokenValue);
-    } else {
-      localStorage.removeItem('token');
-    }
+    localStorage.setItem('token', tokenValue);
   }
 
   function logout() {
